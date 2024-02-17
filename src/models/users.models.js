@@ -22,6 +22,13 @@ const usersSchema = new mongoose.Schema({
     refresh_token: {
         type: String
     },
+    plan:{
+        type:Number,
+        default:-1
+    },
+    planSubData:{
+        type:String
+    },
     usage_history: {
         type: [
             {
@@ -72,4 +79,5 @@ usersSchema.methods.generateAccessToken = function () {
         }
     )
 }
+
 export const User = mongoose.model('User', usersSchema);

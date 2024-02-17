@@ -10,7 +10,7 @@ const verifyJWT = asyncHandler(
     // get data from Db related to cookie
     // append user into request
     async (req, res, next) => {
-        const accessToken =await req.cookies.AccessToken 
+        const accessToken =await req.cookies.AccessToken || req.header("Authorization")?.replace("Bearer", "");
         if (!accessToken) throw new apiError(404, "Unauthorized Request Sent !");
 
         const decodedAccessToken = await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
