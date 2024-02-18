@@ -1,7 +1,8 @@
 import moment from "moment";
 import { User } from "../models/users.models";
 import { asyncHandler } from "../utils/asyncHandler";
-
+// TODO: integret strip system to check subscription
+// because user can cancel the plan 
 // this code check is 30 days is over or not  
 // is over then remove plan from database and return 0
 // else return 1

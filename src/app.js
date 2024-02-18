@@ -3,6 +3,7 @@ import cors from 'cors'
 import { route } from './routes/users.routes.js'
 import { admin } from './routes/admin.route.js'
 import cookieParser from 'cookie-parser';
+import { pyqRoute } from './routes/pyq.routes.js';
 
 const app = express()
 
@@ -20,5 +21,6 @@ app.use(express.json({
 
 app.use('/api/v1/users', route)
 app.use('/api/v1/admin', admin)
+app.use('/api/v1/pyq',pyqRoute )
 
 export default app

@@ -4,11 +4,11 @@
 //              3.entry checked if user is having plan ,if yes then plan number checked
 //              4.return -1 is no plan or return plan number 
 
-import { User } from "../models/users.models";
-import { apiError } from "../utils/apiError.utils";
-import { asyncHandler } from "../utils/asyncHandler";
+import { User } from "../models/users.models.js";
+import { apiError } from "../utils/apiError.utils.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-const checkPlan = asyncHandler(
+export const checkPlan = asyncHandler(
     async (req, res, next) => {
         if(req.planValid == 1){
             const userId = await req.user._id;
