@@ -2,21 +2,37 @@ import fs from 'fs';
 import pdf from '../../node_modules/pdf-parse/lib/pdf-parse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 
-const getFile = asyncHandler(async (req, res) => {
-    const filePath = req.files[0]?.path;
+let exam_paper = {};
+// flowchart - take file from req > read file > remove noise > give to chat gpt > return object of data 
+// limitations :
+// 1. cant process OCR
+// 2. cant process image related questions
 
-    const dataBuffer = fs.readFileSync(filePath);
-
-    pdf(dataBuffer).then((data) => {
-        // TODO: sent response to chat gpt and get response
-
-    }).catch((error) => {
-        console.error('Error parsing PDF:', error);
-    });
+const addToExamPaper = asyncHandler(async (req, res) => {
+    console.log(req.files);
+    const files = Array.isArray(req.files) ? req.files : [req.files];
+    for (let i = 0; i < files.length; i++) {
+        const paper = files[i];
+        const exam = await getFile(paper.path);
+        exam_paper[`${paper.originalname}`] = exam; 
+    }
+    
 });
 
-const removeHeaderFooter = (text, threshold = 0.1) => {
-    const lines = text.split('\n');
+const getFile = async (filePath) => {
+    const dataBuffer = fs.readFileSync(filePath);
+    const data = await pdf(dataBuffer);
+    const cleared = removeHeaderFooter(data.text);
+    return cleared;
+};
+
+const removeHeaderFooter = (text, threshold = 0.03) => {
+    const nonEnglishRegex = /[^a-zA-Z0-9\s.,?!'"()\[\]{}:;-]/g;
+    // Remove non-English characters from the text
+    let cleanedTexts = text.replace(nonEnglishRegex, '');
+    const refinedText = cleanedTexts.replace(/^\s*[\r\n]/gm, '').trim();
+
+    const lines = refinedText.split('\n');
 
     const yPosThreshold = threshold * lines.length;
 
@@ -27,6 +43,4 @@ const removeHeaderFooter = (text, threshold = 0.1) => {
     return cleanedText;
 };
 
-
-
-export { getFile };
+export { addToExamPaper };

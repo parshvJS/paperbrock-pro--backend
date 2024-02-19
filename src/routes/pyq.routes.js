@@ -3,7 +3,7 @@ import { upload } from "../middleware/multer.middleware.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 import { checkPlan } from "../middleware/planChecker.middleware.js";
 import { NUMBER_OF_PLANS, pdfPerPlanIncreament } from "../constants.js";
-import { getFile } from "../controller/pyq.controller.js";
+import { addToExamPaper } from "../controller/pyq.controller.js";
 const pyqRoute = Routes();
 
 
@@ -21,8 +21,9 @@ const pyqRoute = Routes();
 //         // TODO: add controller for PYQ
 //     )
     pyqRoute.route('/pyq').post(
+        verifyJWT,
         upload,
-        getFile
+        addToExamPaper
     );
     
 export { pyqRoute }
