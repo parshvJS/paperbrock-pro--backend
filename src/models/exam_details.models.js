@@ -10,6 +10,21 @@ const exam_details_Schema = new mongoose.Schema({
     },
     course:{
         type:String
+    },
+    pdf_url:{
+        type:[
+            {
+                type:String,
+                required:true
+            }
+        ]
+    },
+    help:{
+        type:String,
+        default:"No Help Added !"
+    },
+    data:{
+        type:String
     }
 },{timestamps:true});
 export const Exam_details = mongoose.model('Exam_details',exam_details_Schema)

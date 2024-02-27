@@ -38,8 +38,9 @@ const registerUser = asyncHandler(
         const { password, email, fullName, stream } = req.body;
 
         // validate if data of user already exist 
-        const emailExist = await User.find({ email });
-        if (email === emailExist.email) throw new apiError(400, "Email Alreay Exist !");
+        const emailExist = await User.findOne({ email }).select("email");
+        console.log(emailExist)
+        if (email == emailExist?.email) throw new apiError(400, "Email Alreay Exist !");
 
         // check if stream only exist from selected data 
 
@@ -48,7 +49,7 @@ const registerUser = asyncHandler(
 
         // create document of user in database
         const userDb = await User.create({
-            fullName,
+            fullName:fullName ? fullName : "",
             email,
             password,
             stream
@@ -79,7 +80,9 @@ const logInUser = asyncHandler(
 
     async (req, res) => {
         const { email, password } = req.body;
-        if (!email && !password) throw new apiError(404, "Please provide Email And password !")
+        console.log(email)
+        if (!email && !password)
+        { throw new apiError(404, "Please provide Email And password !"); }
 
         const userInDb = await User.findOne({ email });
         if (!userInDb) throw new apiError(404, "You are not registed ! Please Register before Log in !");
@@ -103,8 +106,8 @@ const logInUser = asyncHandler(
                             user: loggedInUser,
                             tokens:
                             {
-                                "Access Token": AccessToken,
-                                "Refresh Token": refreshToken
+                                "AccessToken": AccessToken,
+                                "RefreshToken": refreshToken
                             }
                         },
                         "Logged in successfully !"
@@ -174,8 +177,8 @@ const refreshAccessToken = asyncHandler(
                                 user: userInDb,
                                 Tokens:
                                 {
-                                    "Access Token": AccessToken,
-                                    "Refresh Token": refreshToken
+                                    "AccessToken": AccessToken,
+                                    "RefreshToken": refreshToken
                                 }
                             }
                         )

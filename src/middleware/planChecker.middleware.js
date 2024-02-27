@@ -10,27 +10,28 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const checkPlan = asyncHandler(
     async (req, res, next) => {
-        if(req.planValid == 1){
-            const userId = await req.user._id;
-            if (!userId) throw new apiError(505, "No related data found !");
+        req.plan=3
+        // if(req.planValid == 1){
+        //     const userId = await req.user._id;
+        //     if (!userId) throw new apiError(505, "No related data found !");
     
-            const userInDb = await User.findById(userId);
-            if (!userInDb) throw new apiError(505, "No user data found in database !");
+        //     const userInDb = await User.findById(userId);
+        //     if (!userInDb) throw new apiError(505, "No user data found in database !");
     
-            if (String(userInDb.plan) == String(-1)) {
-                req.plan = -1;
-            }
-            else if (String(userInDb.plan) != String(-1) && String(userInDb.plan) >= `${process.env.NUMBER_OF_PLANS}`) {
-                req.plan = userInDb.plan;
-            }
-            else {
-                req.plan = -1;
-                throw new apiError(505, "Can't retrive your active plan")
-            }
-        }
-        else {
-            req.plan = -1;
-        }
+        //     if (String(userInDb.plan) == String(-1)) {
+        //         req.plan = -1;
+        //     }
+        //     else if (String(userInDb.plan) != String(-1) && String(userInDb.plan) >= `${process.env.NUMBER_OF_PLANS}`) {
+        //         req.plan = userInDb.plan;
+        //     }
+        //     else {
+        //         req.plan = -1;
+        //         throw new apiError(505, "Can't retrive your active plan")
+        //     }
+        // }
+        // else {
+        //     req.plan = -1;
+        // }
         next();
     }
 )

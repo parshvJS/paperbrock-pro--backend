@@ -8,7 +8,7 @@ route.route('/register').post(registerUser);
 route.route('/login').post(logInUser);
 route.route('/logout').post(verifyJWT,LoggOutUser);
 route.route('/refresh-access-token').post(verifyJWT,refreshAccessToken);
-route.route('/user').get(getCurrentUser);
+route.route('/user').get(verifyJWT,getCurrentUser);
 
 
 
