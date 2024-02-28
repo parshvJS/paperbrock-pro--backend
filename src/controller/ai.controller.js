@@ -121,6 +121,8 @@ const giveAnalayzedData = asyncHandler(async (req, res) => {
         return res.json(new apiResponse(200,
             {
                 id: uploadToDb._id,
+                name:name,
+                stream:stream,
                 resp: resp
             }
         ));
