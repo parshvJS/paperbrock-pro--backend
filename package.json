@@ -25,7 +25,7 @@
     "openai": "^4.28.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^4.0.379",
-    "stripe": "^14.17.0",
-    "vercel": "^33.5.3"
+    "serverless-http": "^3.2.0",
+    "stripe": "^14.17.0"
   }
 }

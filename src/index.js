@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 import app from './app.js'
 import  connectDB  from './db/connetDB.db.js'
+import serverless from 'serverless-http';
+
 dotenv.config();
 
 const port = process.env.port || 8000;
@@ -16,3 +18,5 @@ connectDB().then(() => {
     console.log("Error in index.js (catch) ! ")
     throw err
 })
+
+export const handler = serverless(app);
