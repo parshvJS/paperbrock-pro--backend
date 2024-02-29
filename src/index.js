@@ -5,6 +5,9 @@ dotenv.config();
 
 const port = process.env.port || 8000;
 connectDB().then(() => {
+    app.get('/',(req,res)=>{
+        res.send("I am live ")
+    })
     app.listen(port, () => {
         console.log(process.env.CHATGPT_API)
         console.log(`Listening to port ${port}`)
