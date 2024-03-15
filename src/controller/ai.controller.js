@@ -12,7 +12,7 @@
 // const giveAnalayzedData = asyncHandler(async (req, res) => {
 //     const { name, stream, course, help } = req?.body;
 //     const { _id } = req.user;
-//     const openai = new OpenAI({apiKey:'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'});
+//     const openai = new OpenAI({apiKey:'in .env'});
 //     if (!name || !stream || !course) throw new apiError(400, "Exam Name, Stream, and course are required!");
 //     try {
 //         let pdf_url = [];
