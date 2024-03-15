@@ -23,6 +23,10 @@ const exam_details_Schema = new mongoose.Schema({
         type:String,
         default:"No Help Added !"
     },
+    color:{
+        type:String,
+        default:"#FF33FF"
+    },
     data:{
         type:String
     }

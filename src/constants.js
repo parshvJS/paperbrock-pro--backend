@@ -38,4 +38,41 @@ const pyqPrompt = `Given an exam_paper object containing information about multi
 Exam Paper Object
 5. Give a simple text output. Simply focus on delivering the structured JavaScript object with the information required; don't give any explanation or summary, this is exam_paper object : .
 `
-export {resOptions,NUMBER_OF_PLANS ,pdfPerPlanIncreament,pyqPrompt};
+
+
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const shuffledColors = shuffle([
+  "#FF5733", "#33FF57", "#5733FF", "#FF9933", "#66FF33",
+  "#3399FF", "#FF3399", "#FFFF33", "#33FFFF", "#9933FF",
+  "#FF3366", "#66FF99", "#3399FF", "#FF99FF", "#FF3333",
+  "#33FF66", "#9933FF", "#FF6633", "#33FF99", "#9933FF",
+  "#FF3366", "#66FF99", "#3399FF", "#FF99FF", "#FF3333",
+  "#33FF66", "#9933FF", "#FF6633", "#33FF99", "#9933FF",
+  "#FF3366", "#66FF99", "#3399FF", "#FF99FF", "#FF3333",
+  "#33FF66", "#9933FF", "#FF6633", "#33FF99", "#9933FF",
+  "#FF3366", "#66FF99", "#3399FF", "#FF99FF", "#FF3333",
+  "#33FF66", "#9933FF", "#FF6633", "#33FF99", "#9933FF",
+  "#FF3366", "#66FF99", "#3399FF", "#FF99FF", "#FF3333",
+  "#33FF66", "#9933FF", "#FF6633", "#33FF99", "#9933FF"
+]);
+
+
+let currentIndex = 0;
+
+function getRandomColor() {
+  if (currentIndex >= shuffledColors.length) {
+      currentIndex = 0;
+  }
+  const color = shuffledColors[currentIndex];
+  currentIndex++;
+  return color;
+}
+export {resOptions,NUMBER_OF_PLANS ,pdfPerPlanIncreament,pyqPrompt,getRandomColor};

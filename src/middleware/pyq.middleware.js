@@ -19,6 +19,7 @@ const addToExamPaper = asyncHandler(async (req, _ , next) => {
         exam_paper[`${paper.originalname}`] = exam;
     }
     req.exam_paper = exam_paper;
+    console.log(req.exam_paper , "is here for chat gpt")
     next();
 });
 

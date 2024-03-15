@@ -30,12 +30,7 @@ const usersSchema = new mongoose.Schema({
         type:String
     },
     usage_history: {
-        type: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "History"
-            }
-        ]
+        type: []
     }
 }, { timestamps: true });
 

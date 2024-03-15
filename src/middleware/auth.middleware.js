@@ -1,5 +1,6 @@
 import { User } from "../models/users.models.js";
 import { apiError } from "../utils/apiError.utils.js";
+import { apiResponse } from "../utils/apiResponse.utils.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
@@ -10,19 +11,26 @@ const verifyJWT = asyncHandler(
     // get data from Db related to cookie
     // append user into request
     async (req, res, next) => {
-        const accessToken =await req.cookies.AccessToken || req.header("Authorization")?.replace("Bearer ", "") ;
-        if (!accessToken) throw new apiError(404, "Unauthorized Request Sent !");
+        try {
+            const accessToken = await req.cookies.AccessToken || req.header("Authorization")?.replace("Bearer ", "");
+            if (!accessToken) throw new apiError(404, "Unauthorized Request Sent !");
 
-        const decodedAccessToken = await jwt.verify(String(accessToken),process.env.ACCESS_TOKEN_SECRET);
-        if (!decodedAccessToken) throw new apiError(500, "No data found in Cookies !")
+            const decodedAccessToken = await jwt.verify(String(accessToken), process.env.ACCESS_TOKEN_SECRET);
+            if (!decodedAccessToken) throw new apiError(500, "No data found in Cookies !")
 
-        const userInDb = await User.findById(decodedAccessToken._id).select("-password -refresh_token")
-        if (!userInDb) throw new apiError(500, "No data found in Database !")
+            const userInDb = await User.findById(decodedAccessToken._id).select("-password -refresh_token")
+            if (!userInDb) throw new apiError(500, "No data found in Database !")
 
-        req.user = userInDb;
+            req.user = userInDb;
+            next()
+        } catch (error) {
 
-        next();
+                return res.status(505).json(
+                    new apiResponse(504,"Please Log in","log-in")
+                )
+            }
+
     }
 )
 
-export {verifyJWT}
+export { verifyJWT }
