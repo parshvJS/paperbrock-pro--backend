@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { pyqRoute } from './routes/pyq.routes.js';
 import { errorHandler } from './middleware/errHandler.middleware.js';
 import { aibook } from './routes/aibook.route.js';
+import { practice } from './routes/practice.route.js';
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use('/api/v1/users', route)
 app.use('/api/v1/admin', admin)
 app.use('/api/v1/pyq',pyqRoute )
 app.use('/api/v1/ai',aibook )
+app.use('/api/v1/practice',practice )
 app.use(errorHandler); 
 
 export default app

@@ -26,7 +26,6 @@ async function generateRefreshAccessToken(userId) {
     const AccessToken = await user.generateAccessToken();
     user.refresh_token = refreshToken;
     user.save({ validateBeforeSave: false });
-    console.log("func", refreshToken, AccessToken)
     return { refreshToken, AccessToken };
 }
 
@@ -39,7 +38,6 @@ const registerUser = asyncHandler(
 
         // validate if data of user already exist 
         const emailExist = await User.findOne({ email }).select("email");
-        console.log(emailExist)
         if (email == emailExist?.email) throw new apiError(400, "Email Alreay Exist !");
 
         // check if stream only exist from selected data 
@@ -80,7 +78,6 @@ const logInUser = asyncHandler(
 
     async (req, res) => {
         const { email, password } = req.body;
-        console.log(email)
         if (!email && !password)
         { throw new apiError(404, "Please provide Email And password !"); }
 
@@ -120,7 +117,6 @@ const logInUser = asyncHandler(
 const LoggOutUser = asyncHandler(
     async (req, res) => {
         const userId = req.user._id
-        console.log('loggin out');
         await User.findByIdAndUpdate(
             userId,
             {

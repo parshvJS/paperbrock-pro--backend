@@ -31,6 +31,9 @@ const usersSchema = new mongoose.Schema({
     },
     usage_history: {
         type: []
+    },
+    paper_usage : {
+        type:String
     }
 }, { timestamps: true });
 
@@ -46,7 +49,6 @@ usersSchema.methods.isPasswordCorrect = async function (password) {
 }
 
 usersSchema.methods.generateRefreshToken = function () {
-    console.log(`${process.env.REFRESH_TOKEN_SECRET}`)
     return jwt.sign(
         {
             _id: this._id,
